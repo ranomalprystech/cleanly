@@ -1,0 +1,42 @@
+@use "./variables" as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: $dark-color;
+  background-color: $white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  background-color: #54aabd;
+  color: $white;
+  font-size: 28px;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+  span {
+    margin-left: 10px;
+  }
+}

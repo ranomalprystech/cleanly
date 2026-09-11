@@ -1,0 +1,185 @@
+.faq {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 90px 24px;
+
+  &__container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  // Heading
+  &__heading {
+    text-align: center;
+    margin-bottom: 55px;
+
+    h2 {
+      color: #3d4b5e;
+      font-size: 48px;
+      font-weight: 400;
+      margin: 0 0 18px;
+
+      span {
+        color: #45c3d3;
+        border-bottom: 3px solid #45c3d3;
+        padding-bottom: 5px;
+      }
+    }
+
+    p {
+      color: #8b9aab;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+  }
+
+  // FAQ List Container
+  &__list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  // Individual FAQ Item
+  &__item {
+    border-bottom: 1px solid #e0e6ea;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+
+  // Question Block
+  &__question {
+    width: 100%;
+    min-height: 70px;
+    padding: 22px 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    border: none;
+    background-color: #f0f3f5; // Grey base block
+    color: #3d4b5e;
+
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+
+    cursor: pointer;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+
+    &:hover {
+      background-color: #389eb2;
+      color: #ffffff;
+
+      .faq__icon {
+        color: #ffffff;
+      }
+    }
+  }
+
+  // Plus / Minus Icon
+  &__icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #389eb2;
+    font-size: 24px;
+    font-weight: 400;
+
+    transition: color 0.25s ease;
+  }
+
+  // Accordion Expand/Collapse Container
+  &__answer {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.35s ease;
+    background-color: #ffffff;
+
+    p {
+      overflow: hidden;
+      margin: 0;
+      padding: 0 28px;
+
+      color: #74808c;
+      font-size: 15px;
+      line-height: 1.7;
+
+      transition: padding 0.35s ease;
+    }
+  }
+
+  // Active State (Expanded Accordion - keeps background teal and text/icon white)
+  &__item--active {
+    .faq__question {
+      background-color: #389eb2;
+      color: #ffffff;
+    }
+
+    .faq__icon {
+      color: #ffffff;
+    }
+
+    .faq__answer {
+      grid-template-rows: 1fr;
+
+      p {
+        padding-top: 20px;
+        padding-bottom: 25px;
+      }
+    }
+  }
+
+  // Tablet
+  @media (max-width: 900px) {
+    padding: 75px 30px;
+
+    &__heading h2 {
+      font-size: 42px;
+    }
+  }
+
+  // Mobile
+  @media (max-width: 600px) {
+    padding: 60px 20px;
+
+    &__heading {
+      margin-bottom: 40px;
+
+      h2 {
+        font-size: 34px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+    }
+
+    &__question {
+      min-height: 65px;
+      padding: 18px 20px;
+      font-size: 16px;
+    }
+
+    &__answer p {
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 14px;
+    }
+  }
+}
