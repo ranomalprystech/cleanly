@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom';
 import { PhoneCall } from 'lucide-react';
 import axios from 'axios';
 import '../styles/components/Auth.scss';
@@ -15,6 +15,8 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
 
   const navigate = useNavigate();
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -27,29 +29,35 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
     setError('');
     setLoading(true);
 
-    const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+    const endpoint = isLogin ? '/auth/login' : '/auth/register';
 
     try {
-      const response = await axios.post(`http://localhost:5000${endpoint}`, formData);
+      const response = await axios.post(
+        `${API_BASE_URL}${endpoint}`,
+        formData
+      );
+
       const data = response.data;
 
       if (isLogin) {
         if (data.token) {
-            localStorage.setItem('token', data.token);
+          localStorage.setItem('token', data.token);
           localStorage.setItem('user', JSON.stringify(data.user));
         }
-        
-        // Safely invoke the prop
+
         setIsLoggedIn?.(true);
         setCurrentUser?.(data.user);
-        
+
         navigate('/');
-        } else {
+      } else {
         alert('Account created successfully! Please sign in.');
         setIsLogin(true);
       }
     } catch (err) {
-      const message = err.response?.data?.message || 'Something went wrong. Please try again.';
+      const message =
+        err.response?.data?.message ||
+        'Something went wrong. Please try again.';
+
       setError(message);
     } finally {
       setLoading(false);
@@ -65,6 +73,7 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
             alt="Cleanly"
           />
         </Link>
+
         <a
           className="whatsapp-link"
           href="https://wa.me/18007108420"
@@ -73,7 +82,11 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
           aria-label="Contact Cleanly on WhatsApp"
           title="Contact us on WhatsApp"
         >
-          <PhoneCall size={22} strokeWidth={2.2} aria-hidden="true" />
+          <PhoneCall
+            size={22}
+            strokeWidth={2.2}
+            aria-hidden="true"
+          />
         </a>
       </header>
 
@@ -90,6 +103,7 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
             >
               Login
             </button>
+
             <button
               type="button"
               className={`tab-btn ${!isLogin ? 'active' : ''}`}
@@ -103,7 +117,11 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
           </div>
 
           <form className="auth-form" onSubmit={handleSubmit}>
-            {error && <div className="error-message">{error}</div>}
+            {error && (
+              <div className="error-message">
+                {error}
+              </div>
+            )}
 
             <div className="input-group">
               <input
@@ -127,8 +145,16 @@ const Auth = ({ setIsLoggedIn, setCurrentUser }) => {
               />
             </div>
 
-            <button type="submit" className="submit-btn" disabled={loading}>
-              {loading ? 'Processing...' : isLogin ? 'Sign In' : 'Create Account'}
+            <button
+              type="submit"
+              className="submit-btn"
+              disabled={loading}
+            >
+              {loading
+                ? 'Processing...'
+                : isLogin
+                ? 'Sign In'
+                : 'Create Account'}
             </button>
           </form>
         </div>
